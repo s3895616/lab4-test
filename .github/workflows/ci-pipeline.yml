@@ -17,5 +17,10 @@ jobs:
         node-version: "18"
     - name: Install dependencies
       run: npm clean-install
-    - name: Run linter
-      run: npm run lint
+    - name: Run unit tests
+      run: npm run test-unit
+    - if: success() || failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: unit-test-${{ github.sha }}
+        path: reports/report.xml
